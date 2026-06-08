@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sivaparvathi Y — Senior React Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #18181f;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --text: #f0eff8;
+    --muted: #8a899a;
+    --accent: #7c6ff7;
+    --accent2: #b8b0ff;
+    --accent3: #5dd5a8;
+    --accent4: #f4a56e;
+    --serif: 'DM Serif Display', serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 400;
+    transition: color 0.2s;
+    letter-spacing: 0.03em;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 6rem 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(124,111,247,0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(93,213,168,0.07) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 900px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-label {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent3);
+    margin-bottom: 1.5rem;
+    padding: 0.35rem 0.9rem;
+    border: 1px solid rgba(93,213,168,0.25);
+    border-radius: 20px;
+    background: rgba(93,213,168,0.06);
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent2);
+  }
+
+  .hero-title {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--muted);
+    font-weight: 300;
+    margin-bottom: 2rem;
+    letter-spacing: 0.02em;
+  }
+
+  .hero-summary {
+    max-width: 600px;
+    font-size: 1.05rem;
+    color: rgba(240,239,248,0.7);
+    line-height: 1.75;
+    margin-bottom: 3rem;
+    font-weight: 300;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-primary:hover { background: #9489ff; transform: translateY(-1px); }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    font-weight: 400;
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .btn-outline:hover {
+    border-color: rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.04);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 2.5rem;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .stat-num span { color: var(--accent); }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 6rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 3rem;
+    line-height: 1.15;
+  }
+
+  .section-title em { font-style: italic; color: var(--accent2); }
+
+  /* SKILLS */
+  #skills { background: var(--bg); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .skill-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.75rem;
+    transition: border-color 0.25s, transform 0.2s;
+  }
+
+  .skill-card:hover {
+    border-color: var(--border2);
+    transform: translateY(-2px);
+  }
+
+  .skill-card-icon {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+  }
+
+  .skill-card h3 {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .tag {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: 20px;
+    font-weight: 400;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    background: var(--bg3);
+    white-space: nowrap;
+  }
+
+  /* EXPERIENCE */
+  #experience { background: var(--bg); }
+
+  .exp-list { display: flex; flex-direction: column; gap: 0; }
+
+  .exp-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 2.5rem;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .exp-item:last-child { border-bottom: none; }
+
+  .exp-meta {}
+
+  .exp-company {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--accent2);
+    margin-bottom: 0.25rem;
+  }
+
+  .exp-period {
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+    margin-bottom: 0.5rem;
+  }
+
+  .exp-location {
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  .exp-body h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+
+  .exp-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .exp-bullets li {
+    font-size: 0.9rem;
+    color: rgba(240,239,248,0.65);
+    line-height: 1.65;
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  .exp-bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 0.8rem;
+    top: 0.05em;
+  }
+
+  .exp-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 1.25rem;
+  }
+
+  .exp-tech .tag {
+    background: rgba(124,111,247,0.08);
+    border-color: rgba(124,111,247,0.2);
+    color: var(--accent2);
+  }
+
+  /* EDUCATION */
+  #education { background: var(--bg); }
+
+  .edu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .edu-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s;
+  }
+
+  .edu-card:hover { border-color: var(--border2); }
+
+  .edu-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent3));
+  }
+
+  .edu-degree {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+
+  .edu-school {
+    font-size: 0.875rem;
+    color: var(--accent2);
+    margin-bottom: 0.25rem;
+  }
+
+  .edu-location {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  /* CONTACT */
+  #contact {
+    background: var(--bg);
+    padding-bottom: 8rem;
+  }
+
+  .contact-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-card::after {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(124,111,247,0.1) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .contact-info {}
+
+  .contact-info h3 {
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+
+  .contact-info p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: rgba(240,239,248,0.8);
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .contact-link:hover { color: var(--accent2); }
+
+  .contact-icon {
+    width: 32px; height: 32px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  footer p {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  /* SCROLL ANIMATIONS */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* DECORATIVE LINE */
+  .v-line {
+    width: 1px;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+    margin: 0 auto 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .hero { padding: 7rem 1.5rem 4rem; }
+    section { padding: 4rem 1.5rem; }
+    footer { padding: 2rem 1.5rem; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.75rem; }
+    .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Sivaparvathi Y.</a>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Available for opportunities</div>
+    <h1>Sivaparvathi<br><em>Yanikapati</em></h1>
+    <p class="hero-title">Senior React Developer &nbsp;·&nbsp; 9 Years of Experience</p>
+    <p class="hero-summary">
+      Architecting scalable, high-performance web applications with React.js, TypeScript, and modern state management. Currently building trading dashboards and financial UIs at AT&T.
+    </p>
+    <div class="hero-actions">
+      <a href="#experience" class="btn-primary">View Experience &rarr;</a>
+      <a href="#contact" class="btn-outline">Get in Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">9<span>+</span></div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div>
+        <div class="stat-num">5<span>+</span></div>
+        <div class="stat-label">Companies</div>
+      </div>
+      <div>
+        <div class="stat-num">4<span>+</span></div>
+        <div class="stat-label">Industries</div>
+      </div>
+      <div>
+        <div class="stat-num">2</div>
+        <div class="stat-label">Master's Degrees</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-tag">Technical Expertise</div>
+  <h2 class="section-title">What I <em>build with</em></h2>
+
+  <div class="skills-grid">
+    <div class="skill-card fade-up">
+      <div class="skill-card-icon" style="background: rgba(124,111,247,0.12);">⚛️</div>
+      <h3>Frameworks &amp; Libraries</h3>
+      <div class="skill-tags">
+        <span class="tag">React.js</span>
+        <span class="tag">Next.js</span>
+        <span class="tag">React Native</span>
+        <span class="tag">Redux</span>
+        <span class="tag">React 19</span>
+      </div>
+    </div>
+    <div class="skill-card fade-up">
+      <div class="skill-card-icon" style="background: rgba(93,213,168,0.12);">🗂️</div>
+      <h3>State Management</h3>
+      <div class="skill-tags">
+        <span class="tag">Redux Toolkit</span>
+        <span class="tag">Context API</span>
+        <span class="tag">Zustand</span>
+        <span class="tag">Recoil</span>
+        <span class="tag">Saga</span>
+        <span class="tag">Thunk</span>
+      </div>
+    </div>
+    <div class="skill-card fade-up">
+      <div class="skill-card-icon" style="background: rgba(244,165,110,0.12);">🎨</div>
+      <h3>Styling &amp; UI</h3>
+      <div class="skill-tags">
+        <span class="tag">Tailwind CSS</span>
+        <span class="tag">Material UI</span>
+        <span class="tag">Styled Components</span>
+        <span class="tag">SCSS</span>
+        <span class="tag">CSS Modules</span>
+      </div>
+    </div>
+    <div class="skill-card fade-up">
+      <div class="skill-card-icon" style="background: rgba(184,176,255,0.12);">🔌</div>
+      <h3>APIs &amp; Data</h3>
+      <div class="skill-tags">
+        <span class="tag">GraphQL</span>
+        <span class="tag">REST APIs</span>
+        <span class="tag">Apollo Client</span>
+        <span class="tag">Axios</span>
+        <span class="tag">WebSockets</span>
+        <span class="tag">React Query</span>
+      </div>
+    </div>
+    <div class="skill-card fade-up">
+      <div class="skill-card-icon" style="background: rgba(93,213,168,0.12);">🧪</div>
+      <h3>Testing</h3>
+      <div class="skill-tags">
+        <span class="tag">Jest</span>
+        <span class="tag">React Testing Library</span>
+        <span class="tag">Cypress</span>
+        <span class="tag">Playwright</span>
+        <span class="tag">Enzyme</span>
+      </div>
+    </div>
+    <div class="skill-card fade-up">
+      <div class="skill-card-icon" style="background: rgba(124,111,247,0.12);">☁️</div>
+      <h3>Cloud &amp; DevOps</h3>
+      <div class="skill-tags">
+        <span class="tag">AWS</span>
+        <span class="tag">Azure</span>
+        <span class="tag">GCP</span>
+        <span class="tag">GitHub Actions</span>
+        <span class="tag">Jenkins</span>
+        <span class="tag">CI/CD</span>
+      </div>
+    </div>
+    <div class="skill-card fade-up">
+      <div class="skill-card-icon" style="background: rgba(244,165,110,0.12);">⚡</div>
+      <h3>Performance</h3>
+      <div class="skill-tags">
+        <span class="tag">React.memo</span>
+        <span class="tag">useMemo / useCallback</span>
+        <span class="tag">Lazy Loading</span>
+        <span class="tag">Code Splitting</span>
+        <span class="tag">SSR / SSG</span>
+      </div>
+    </div>
+    <div class="skill-card fade-up">
+      <div class="skill-card-icon" style="background: rgba(184,176,255,0.12);">🛠️</div>
+      <h3>Tooling</h3>
+      <div class="skill-tags">
+        <span class="tag">Webpack</span>
+        <span class="tag">Vite</span>
+        <span class="tag">Storybook</span>
+        <span class="tag">Nx</span>
+        <span class="tag">Turborepo</span>
+        <span class="tag">Babel</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-tag">Career History</div>
+  <h2 class="section-title">Where I've <em>made impact</em></h2>
+
+  <div class="exp-list">
+
+    <div class="exp-item fade-up">
+      <div class="exp-meta">
+        <div class="exp-company">AT&amp;T</div>
+        <div class="exp-period">Sep 2023 – Present</div>
+        <div class="exp-location">Plano, TX</div>
+      </div>
+      <div class="exp-body">
+        <h3>Senior Front-end Developer</h3>
+        <ul class="exp-bullets">
+          <li>Built trading dashboards with React 19 features including Optimistic UI and async transitions for real-time financial data.</li>
+          <li>Implemented React Server Components with Next.js App Router enabling streaming SSR, improving SEO and TTFB.</li>
+          <li>Integrated GraphQL APIs with Apollo Client to reduce over-fetching across portfolio analytics modules.</li>
+          <li>Built monitoring dashboards using D3.js tracking performance of AI-driven automation workflows.</li>
+          <li>Implemented OAuth 2.0, JWT, and OpenID Connect for secure authentication flows with session and token refresh logic.</li>
+          <li>Integrated Kafka for event-driven updates in trading dashboards and streaming notifications.</li>
+          <li>Enhanced CI/CD with GitLab and Spinnaker for zero-downtime deployments, monitored via Dynatrace and AWS CloudWatch.</li>
+        </ul>
+        <div class="exp-tech">
+          <span class="tag">React 19</span>
+          <span class="tag">Next.js</span>
+          <span class="tag">GraphQL</span>
+          <span class="tag">D3.js</span>
+          <span class="tag">Kafka</span>
+          <span class="tag">AWS CloudWatch</span>
+          <span class="tag">OAuth 2.0</span>
+          <span class="tag">Redux Toolkit</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item fade-up">
+      <div class="exp-meta">
+        <div class="exp-company">TD Bank</div>
+        <div class="exp-period">Apr 2022 – Aug 2023</div>
+        <div class="exp-location">Reston, VA</div>
+      </div>
+      <div class="exp-body">
+        <h3>Frontend Developer / React Developer</h3>
+        <ul class="exp-bullets">
+          <li>Migrated key dashboard modules from Angular 8 to React 18, improving performance and maintainability.</li>
+          <li>Applied Micro Frontend Architecture using Module Federation for independently deployable React modules.</li>
+          <li>Managed monorepo architecture using Nx and Turborepo for scalable enterprise micro-frontend development.</li>
+          <li>Built PWAs with Workbox and Service Workers for enhanced mobile usability and offline support.</li>
+          <li>Deployed on GCP using Kubernetes Engine and Cloud Storage for high availability and scalability.</li>
+        </ul>
+        <div class="exp-tech">
+          <span class="tag">React 18</span>
+          <span class="tag">Module Federation</span>
+          <span class="tag">Nx</span>
+          <span class="tag">Turborepo</span>
+          <span class="tag">GCP / GKE</span>
+          <span class="tag">PWA</span>
+          <span class="tag">Redux Toolkit</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item fade-up">
+      <div class="exp-meta">
+        <div class="exp-company">GE Healthcare</div>
+        <div class="exp-period">Dec 2020 – Mar 2022</div>
+        <div class="exp-location">Waukesha, WI</div>
+      </div>
+      <div class="exp-body">
+        <h3>UI Developer</h3>
+        <ul class="exp-bullets">
+          <li>Developed interactive healthcare applications with React, TypeScript, and JavaScript (ES6+).</li>
+          <li>Built real-time features using WebSockets, Socket.IO, and SignalR for live dashboards.</li>
+          <li>Designed dynamic form components with Formik and Yup for patient and provider data entry modules.</li>
+          <li>Integrated Spring Boot backend services for secure healthcare data exchange.</li>
+        </ul>
+        <div class="exp-tech">
+          <span class="tag">React</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">WebSockets</span>
+          <span class="tag">GraphQL</span>
+          <span class="tag">Spring Boot</span>
+          <span class="tag">Formik</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item fade-up">
+      <div class="exp-meta">
+        <div class="exp-company">Johnson &amp; Johnson</div>
+        <div class="exp-period">Sep 2019 – Nov 2020</div>
+        <div class="exp-location">New Jersey</div>
+      </div>
+      <div class="exp-body">
+        <h3>UI Developer / React JS Developer</h3>
+        <ul class="exp-bullets">
+          <li>Built high-performance UIs for insurance claim management, member enrollment, and premium calculation.</li>
+          <li>Developed real-time data visualizations with D3.js and Chart.js for live policy tracking.</li>
+          <li>Deployed React applications to AWS (Fargate, S3) for secure, scalable production hosting.</li>
+          <li>Mentored junior developers in React best practices, performance tuning, and TypeScript usage.</li>
+        </ul>
+        <div class="exp-tech">
+          <span class="tag">React.js</span>
+          <span class="tag">Redux</span>
+          <span class="tag">D3.js</span>
+          <span class="tag">Chart.js</span>
+          <span class="tag">AWS</span>
+          <span class="tag">GraphQL</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item fade-up">
+      <div class="exp-meta">
+        <div class="exp-company">Citi Group</div>
+        <div class="exp-period">Mar 2016 – Dec 2018</div>
+        <div class="exp-location">India</div>
+      </div>
+      <div class="exp-body">
+        <h3>Frontend Developer</h3>
+        <ul class="exp-bullets">
+          <li>Built scalable component-driven SPAs for banking dashboards and transaction modules.</li>
+          <li>Architected micro frontend components complementing backend microservices for independent deployments.</li>
+          <li>Built dashboards and data visualization components using Chart.js and D3.js for actionable insights.</li>
+        </ul>
+        <div class="exp-tech">
+          <span class="tag">ReactJS</span>
+          <span class="tag">Redux</span>
+          <span class="tag">Spring Boot</span>
+          <span class="tag">Chart.js</span>
+          <span class="tag">REST APIs</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-tag">Academic Background</div>
+  <h2 class="section-title">Education &amp; <em>Credentials</em></h2>
+
+  <div class="edu-grid">
+    <div class="edu-card fade-up">
+      <div class="edu-degree">Master of Science</div>
+      <div style="font-size:0.8rem; color: var(--muted); margin-bottom: 0.75rem; font-weight:500; letter-spacing:0.05em; text-transform: uppercase;">Computer &amp; Information Science</div>
+      <div class="edu-school">Sacred Heart University</div>
+      <div class="edu-location">Fairfield, CT, USA</div>
+    </div>
+    <div class="edu-card fade-up">
+      <div class="edu-degree">Master of Science</div>
+      <div style="font-size:0.8rem; color: var(--muted); margin-bottom: 0.75rem; font-weight:500; letter-spacing:0.05em; text-transform: uppercase;">Computer Science</div>
+      <div class="edu-school">Sri Padmavathi Mahila Visvavidhyalayam</div>
+      <div class="edu-location">Tirupati, AP, India</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-tag">Get in Touch</div>
+  <h2 class="section-title">Let's <em>connect</em></h2>
+
+  <div class="contact-card fade-up">
+    <div class="contact-info">
+      <h3>Open to new roles</h3>
+      <p>Looking for Senior / Lead React Developer opportunities. Let's talk.</p>
+      <div class="contact-links">
+        <a href="mailto:Sivaparvathiengineer@gmail.com" class="contact-link">
+          <div class="contact-icon">✉️</div>
+          Sivaparvathiengineer@gmail.com
+        </a>
+        <a href="tel:+14752998282" class="contact-link">
+          <div class="contact-icon">📞</div>
+          +1 475 299 8282
+        </a>
+      </div>
+    </div>
+    <div style="display:flex; flex-direction: column; gap: 0.75rem; position: relative; z-index: 1;">
+      <a href="mailto:Sivaparvathiengineer@gmail.com" class="btn-primary" style="text-align:center; justify-content: center;">
+        Send an Email &rarr;
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Sivaparvathi Yanikapati. Senior React Developer.</p>
+  <p style="font-size:0.75rem; color: #555;">Built with HTML, CSS &amp; ✨</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, i * 80);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
